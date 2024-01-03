@@ -70,15 +70,12 @@ gallery.insertAdjacentHTML("beforeend", createMarkup(images));
 gallery.addEventListener("click", onClick);
 
 function onClick(evt) {
+  console.dir(evt.target);
   evt.preventDefault();
 
   if (evt.target === evt.currentTarget) {
     return;
   }
-
-  // const liEL = evt.target.closest(".gallery-item");
-  // const getSource = liEL.children[0].href;
-  // const findEl = images.find(({ original }) => original === getSource);
 
   const instanse = basicLightbox.create(`
   <img
