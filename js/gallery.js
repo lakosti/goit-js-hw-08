@@ -49,7 +49,6 @@ const images = [
 const gallery = document.querySelector(".gallery");
 
 function createMarkup(arr) {
-  console.log(arr);
   return arr
     .map(
       ({ preview, original, description }) =>
@@ -68,8 +67,8 @@ function createMarkup(arr) {
 }
 
 gallery.insertAdjacentHTML("beforeend", createMarkup(images));
-
 gallery.addEventListener("click", onClick);
+
 function onClick(evt) {
   evt.preventDefault();
 
@@ -77,15 +76,16 @@ function onClick(evt) {
     return;
   }
 
-  const liEL = evt.target.closest(".gallery-item");
-  const getSource = liEL.children[0].href;
+  // const liEL = evt.target.closest(".gallery-item");
+  // const getSource = liEL.children[0].href;
+  // const findEl = images.find(({ original }) => original === getSource);
 
-  const findEl = images.find(({ original }) => original === getSource);
   const instanse = basicLightbox.create(`
   <img
         class="modal-img"
-        src="${findEl.original}"
-        alt="${findEl.description}"
+        src="${evt.target.dataset.source}"
+        alt="${evt.target.alt}"
+        width="1280"
       />
     `);
   instanse.show();
