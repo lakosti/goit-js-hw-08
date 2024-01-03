@@ -46,13 +46,55 @@ const images = [
   },
 ];
 
-/**<li class="gallery-item">
-  <a class="gallery-link" href="large-image.jpg">
+const gallery = document.querySelector(".gallery");
+
+function createMarkup(arr) {
+  console.log(arr);
+  return arr
+    .map(
+      ({ preview, original, description }) =>
+        `<li class="gallery-item">
+  <a class="gallery-link" href="${original}">
     <img
       class="gallery-image"
-      src="small-image.jpg"
-      data-source="large-image.jpg"
-      alt="Image description"
+      src="${preview}"
+       data-source="${original}"
+      alt="${description}"
     />
   </a>
-</li> */
+</li>`
+    )
+    .join("");
+}
+
+gallery.insertAdjacentHTML("beforeend", createMarkup(images));
+
+gallery.addEventListener("click", onClick);
+function onClick(evt) {
+  evt.preventDefault();
+
+  if (evt.target === evt.currentTarget) {
+    return;
+  }
+
+  const liEL = evt.target.closest(".gallery-item");
+  const getSource = liEL.children[0].href;
+
+  const findEl = images.find(({ original }) => original === getSource);
+  const instanse = basicLightbox.create(`
+  <img
+        class="modal-img"
+        src="${findEl.original}"
+        alt="${findEl.description}"
+      />
+    `);
+  instanse.show();
+
+  document.addEventListener("keydown", onKey);
+  function onKey(evt) {
+    if (evt.code === "Escape") {
+      instanse.close();
+      removeEventListener("keydown", onKey);
+    }
+  }
+}
