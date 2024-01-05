@@ -77,21 +77,31 @@ function onClick(evt) {
     return;
   }
 
-  const instanse = basicLightbox.create(`
+  const instanse = basicLightbox.create(
+    `
   <img
         class="modal-img"
         src="${evt.target.dataset.source}"
         alt="${evt.target.alt}"
         width="1280"
       />
-    `);
+    `,
+    {
+      onShow: (instance) => {
+        document.addEventListener("keydown", onKey);
+      },
+      onClose: (instance) => {
+        document.removeEventListener("keydown", onKey);
+      },
+    }
+  );
   instanse.show();
 
-  document.addEventListener("keydown", onKey);
+  // document.addEventListener("keydown", onKey);
   function onKey(evt) {
     if (evt.code === "Escape") {
       instanse.close();
-      document.removeEventListener("keydown", onKey);
+      // document.removeEventListener("keydown", onKey);
     }
   }
 }
