@@ -73,7 +73,7 @@ function onClick(evt) {
   console.dir(evt.target);
   evt.preventDefault();
 
-  if (evt.target === evt.currentTarget) {
+  if (evt.target.nodeName !== "IMG") {
     return;
   }
 
@@ -91,7 +91,7 @@ function onClick(evt) {
   function onKey(evt) {
     if (evt.code === "Escape") {
       instanse.close();
-      removeEventListener("keydown", onKey);
+      document.removeEventListener("keydown", onKey);
     }
   }
 }
