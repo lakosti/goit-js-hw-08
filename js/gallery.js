@@ -77,7 +77,7 @@ function onClick(evt) {
     return;
   }
 
-  const instanse = basicLightbox.create(
+  const instance = basicLightbox.create(
     `
   <img
         class="modal-img"
@@ -95,13 +95,11 @@ function onClick(evt) {
       },
     }
   );
-  instanse.show();
+  instance.show();
 
-  // document.addEventListener("keydown", onKey);
   function onKey(evt) {
     if (evt.code === "Escape") {
-      instanse.close();
-      // document.removeEventListener("keydown", onKey);
+      instance.close();
     }
   }
 }
