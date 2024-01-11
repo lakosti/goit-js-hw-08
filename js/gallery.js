@@ -86,20 +86,23 @@ function onClick(evt) {
         width="1280"
       />
     `,
+    //перевикористання функції з привязкою до this
     {
-      onShow: (instance) => {
-        document.addEventListener("keydown", onKey);
+      handler: null,
+      onShow(instance) {
+        this.handler = closeModal.bind(instance); // привязали this до instance
+        document.addEventListener("keydown", this.handler);
       },
-      onClose: (instance) => {
-        document.removeEventListener("keydown", onKey);
+      onClose() {
+        document.removeEventListener("keydown", this.handler);
       },
     }
   );
   instance.show();
 
-  function onKey(evt) {
+  function closeModal(evt) {
     if (evt.code === "Escape") {
-      instance.close();
+      this.close();
     }
   }
 }
